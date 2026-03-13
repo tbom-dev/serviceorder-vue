@@ -1,35 +1,26 @@
-name: Deploy Vue App to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main # Trigger on pushes to the main branch
+      - main # or master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch all history for the gh-pages action
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20' # Use a recent Node.js version
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm install # or yarn install or pnpm install
+        run: npm install
 
-      - name: Build project
-        run: npm run build # Your build command (usually generates a 'dist' folder)
+      - name: Build
+        run: npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # The folder containing your built files
-          cname: your-custom-domain.com # Optional: if using a custom domain
+          publish_dir: ./dist # The build output directory
+          
