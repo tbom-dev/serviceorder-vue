@@ -6,6 +6,7 @@ import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/serviceorder-vue/', // <-- add this
   plugins: [
     Vue({
       template: { transformAssetUrls },
